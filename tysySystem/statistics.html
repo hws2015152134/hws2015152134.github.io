@@ -1,0 +1,470 @@
+<style>
+        #selec{position: absolute;right: 0px;top: 0px;font-size: 14px;z-index: 10000;}
+        select,#btn{outline: none;height: 32px;line-height:32px;}
+        #btn{padding: 0px 5px;}
+    </style>
+<script src="js/echarts.js"></script>
+<script src="js/jquery-1.12.4.min.js"></script>
+<div>
+    <div style="width: 100%;margin-bottom: 65px;">
+        <div id="main1" style="width: 100%;height: 400px; margin: 0px auto;"></div>
+    </div>
+    <div style="position: relative">
+        <div id="selec">
+            所属部门：
+            <select id="select1">
+                <option value="1">所有部门</option>
+                <option value="2">分团委</option>
+                <option value="3">学生会</option>
+                <option value="3">其他</option>
+            </select>
+            时间：
+            <select id="select2">
+                <option value="1">全部</option>
+                <option value="2">截至2013学年</option>
+                <option value="3">截至2014学年</option>
+                <option value="4">截至2015学年</option>
+                <option value="5">截至2016学年</option>
+                <option value="6">截至2017学年</option>
+            </select>
+            <input id="btn" type="button" value="查询">
+        </div>
+        <div id="main2" style="width: 100%;height: 300px; margin: 0px auto;"></div>
+    </div>
+</div>
+<script>
+    //坐标图开始：
+
+    var dom = document.getElementById('main1');
+    var mychart1 = echarts.init(dom);
+
+    var dataMap = {};
+
+    function dataFormatter(obj) {
+        var pList = ['一月','二月','三月','四月','五月','六月','七月','八月', '九月','十月','十一月','十二月'];
+        var temp;
+        for (var year = 2008; year <= 2017; year++) {
+            var max = 0;
+            var sum = 0;
+            temp = obj[year];
+            for (var i = 0, l = temp.length; i < l; i++) {
+                max = Math.max(max, temp[i]);
+                sum += temp[i];
+                obj[year][i] = {
+                    name : pList[i],
+                    value : temp[i]
+                }
+            }
+            obj[year + 'max'] = Math.floor(max / 100) * 100;
+            obj[year + 'sum'] = sum;
+        }
+        return obj;
+    }
+
+    dataMap.dataPI = dataFormatter({
+        2017:[11,24,32,16,14,22,10,12],
+        2016:[26,21,32,24,32,24,10,22],
+        2015:[24,15,10,12,17,49,32,15],
+        2014:[21,24,10,22,13,29,22,25],
+        2013:[24,15,12,17,49,27,32,15],
+        2012:[26,21,10,22,13,29,22,25],
+        2011:[16,11,24,32,19,49,32,15],
+        2010:[13,24,32,10,22,22,21,25],
+        2009:[16,14,22,10,12,19,32,15],
+        2008:[26,32,24,10,22,13,22,25]
+    });
+
+    dataMap.dataSI = dataFormatter({
+        2017:[16,11,24,32,14,22,10,15],
+        2016:[26,21,24,32,13,29,22,25],
+        2015:[17,27,29,11,10,12,32,15],
+        2014:[26,32,10,22,13,29,22,25],
+        2013:[24,27,29,11,12,17,49,15],
+        2012:[26,21,24,32,10,22,22,25],
+        2011:[16,11,32,14,22,10,12,19],
+        2010:[22,24,32,10,22,26,13,25],
+        2009:[16,11,22,10,12,19,49,32],
+        2008:[26,21,24,24,32,29,22,25]
+    });
+
+    dataMap.dataTI = dataFormatter({
+        2017:[6,2,4,3,4,3,5,2],
+        2016:[4,2,3,2,9,4,3,5],
+        2015:[4,1,5,2,7,4,3,5],
+        2014:[6,2,4,2,3,2,2,5],
+        2013:[6,1,4,3,9,4,3,5],
+        2012:[6,2,4,3,4,2,2,7],
+        2011:[6,1,4,3,4,4,3,5],
+        2010:[6,2,4,3,4,3,2,9],
+        2009:[6,2,4,3,4,3,6,5],
+        2008:[4,1,7,2,9,1,4,2]
+    });
+
+    option = {
+
+        baseOption: {
+            toolbox: {
+                show: true,
+                orient:'vertical',
+                top:'30%',
+                right:15,
+                z:1000,
+                itemGap: 20,
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    magicType: {
+                        type: ['line', 'bar'],
+                        title: {
+                            line:'折线图',
+                            bar:'柱状图'
+                        }
+                    },
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+
+            timeline: {
+                // y: 0,
+                axisType: 'category',
+                // realtime: false,
+                // loop: false,
+                autoPlay: true,
+                // currentIndex: 2,
+                playInterval: 1000,
+                // controlStyle: {
+                //     position: 'left'
+                // },
+                data: ['2008-03-01','2009-03-01','2010-03-01','2011-03-01','2012-03-01', '2013-03-01','2014-03-01','2015-03-01','2016-03-01','2017-03-01'],
+                label: {
+                    formatter : function(s) {
+                        return (new Date(s)).getFullYear();
+                    }
+                }
+            },
+            tooltip: {
+            },
+            legend: {
+                x: 'right',
+                data: ['分团委', '学生会', '其他']
+            },
+            calculable : true,
+            grid: {
+                top: 80,
+                bottom: 100,
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow',
+                        label: {
+                            show: true,
+                            formatter: function (params) {
+                                return params.value.replace('\n', '');
+                            }
+                        }
+                    }
+                }
+            },
+            xAxis: [
+                {
+                    'type':'category',
+                    'axisLabel':{'interval':0},
+                    'data':[
+                        '三月','\n四月','五月','\n六月', '九月','\n十月','十一月','\n十二月'
+                    ],
+                    splitLine: {show: false}
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '人数'
+                }
+            ],
+            series: [
+                {name: '分团委', type: 'bar'},
+                {name: '学生会', type: 'bar'},
+                {name: '其他',  type: 'bar'},
+                {
+                    name: '参与人数占比',
+                    type: 'pie',
+                    center: ['75%', '25%'],
+                    radius: '28%',
+                    z: 100,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'outside',
+                            textStyle: {
+                                fontSize: '16',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    }
+
+
+                }
+            ]
+        },
+        options: [
+            {
+                title: {text: '2008活动参与人数'},
+                series: [
+                    {data: dataMap.dataPI['2008']},
+                    {data: dataMap.dataSI['2008']},
+                    {data: dataMap.dataTI['2008']},
+                    {data: [
+                        {name: '分团委', value: dataMap.dataPI['2008sum']},
+                        {name: '学生会', value: dataMap.dataSI['2008sum']},
+                        {name: '其他',  value: dataMap.dataTI['20082sum']}
+                    ]}
+                ]
+            },
+            {
+                title : {text: '2009活动参与人数'},
+                series : [
+                    {data: dataMap.dataPI['2009']},
+                    {data: dataMap.dataSI['2009']},
+                    {data: dataMap.dataTI['2009']},
+                    {data: [
+                        {name: '分团委', value: dataMap.dataPI['2009sum']},
+                        {name: '学生会', value: dataMap.dataSI['2009sum']},
+                        {name: '其他',  value: dataMap.dataTI['2009sum']}
+                    ]}
+                ]
+            },
+            {
+                title : {text: '2010活动参与人数'},
+                series : [
+                    {data: dataMap.dataPI['2010']},
+                    {data: dataMap.dataSI['2010']},
+                    {data: dataMap.dataTI['2010']},
+                    {data: [
+                        {name: '分团委', value: dataMap.dataPI['2010sum']},
+                        {name: '学生会', value: dataMap.dataSI['2010sum']},
+                        {name: '其他',  value: dataMap.dataTI['2010sum']}
+                    ]}
+                ]
+            },
+            {
+                title : {text: '2011活动参与人数'},
+                series : [
+                    {data: dataMap.dataPI['2011']},
+                    {data: dataMap.dataSI['2011']},
+                    {data: dataMap.dataTI['2011']},
+                    {data: [
+                        {name: '分团委', value: dataMap.dataPI['2011sum']},
+                        {name: '学生会', value: dataMap.dataSI['2011sum']},
+                        {name: '其他',  value: dataMap.dataTI['2011sum']}
+                    ]}
+                ]
+            },
+            {
+                title : {text: '2012活动参与人数'},
+                series : [
+                    {data: dataMap.dataPI['2012']},
+                    {data: dataMap.dataSI['2012']},
+                    {data: dataMap.dataTI['2012']},
+                    {data: [
+                        {name: '分团委', value: dataMap.dataPI['2012sum']},
+                        {name: '学生会', value: dataMap.dataSI['2012sum']},
+                        {name: '其他',  value: dataMap.dataTI['2012sum']}
+                    ]}
+                ]
+            },
+            {
+                title : {text: '2013活动参与人数'},
+                series : [
+                    {data: dataMap.dataPI['2013']},
+                    {data: dataMap.dataSI['2013']},
+                    {data: dataMap.dataTI['2013']},
+                    {data: [
+                        {name: '分团委', value: dataMap.dataPI['2013sum']},
+                        {name: '学生会', value: dataMap.dataSI['2013sum']},
+                        {name: '其他',  value: dataMap.dataTI['2013sum']}
+                    ]}
+                ]
+            },
+            {
+                title : {text: '2014活动参与人数'},
+                series : [
+                    {data: dataMap.dataPI['2014']},
+                    {data: dataMap.dataSI['2014']},
+                    {data: dataMap.dataTI['2014']},
+                    {data: [
+                        {name: '分团委', value: dataMap.dataPI['2014sum']},
+                        {name: '学生会', value: dataMap.dataSI['2014sum']},
+                        {name: '其他',  value: dataMap.dataTI['2014sum']}
+                    ]}
+                ]
+            },
+            {
+                title : {text: '2015活动参与人数'},
+                series : [
+                    {data: dataMap.dataPI['2015']},
+                    {data: dataMap.dataSI['2015']},
+                    {data: dataMap.dataTI['2015']},
+                    {data: [
+                        {name: '分团委', value: dataMap.dataPI['2015sum']},
+                        {name: '学生会', value: dataMap.dataSI['2015sum']},
+                        {name: '其他',  value: dataMap.dataTI['2015sum']}
+                    ]}
+                ]
+            },
+            {
+                title : {text: '2016活动参与人数'},
+                series : [
+                    {data: dataMap.dataPI['2016']},
+                    {data: dataMap.dataSI['2016']},
+                    {data: dataMap.dataTI['2016']},
+                    {data: [
+                        {name: '分团委', value: dataMap.dataPI['2016sum']},
+                        {name: '学生会', value: dataMap.dataSI['2016sum']},
+                        {name: '其他', value: dataMap.dataTI['2016sum']}
+                    ]}
+                ]
+            },
+            {
+                title : {text: '2017活动参与人数'},
+                series : [
+                    {data: dataMap.dataPI['2017']},
+                    {data: dataMap.dataSI['2017']},
+                    {data: dataMap.dataTI['2017']},
+                    {data: [
+                        {name: '分团委', value: dataMap.dataPI['2017sum']},
+                        {name: '学生会', value: dataMap.dataSI['2017sum']},
+                        {name: '其他',  value: dataMap.dataTI['2017sum']}
+                    ]}
+                ]
+            }
+        ]
+    };
+
+    mychart1.setOption(option);
+
+    //结束。
+
+    //扇形图开始：
+
+    myChart2=echarts.init(document.getElementById('main2'));
+
+    var evaluate=[
+        [
+            {value:523,name:'好评'},
+            {value:500, name:'中评'},
+            {value:75, name:'差评'}
+        ],
+        [
+            {value:88,name:'好评'},
+            {value:198, name:'中评'},
+            {value:31, name:'差评'}
+        ],
+        [
+            {value:108,name:'好评'},
+            {value:168, name:'中评'},
+            {value:26, name:'差评'}
+        ],
+        [
+            {value:128,name:'好评'},
+            {value:138, name:'中评'},
+            {value:21, name:'差评'}
+        ],
+        [
+            {value:148,name:'好评'},
+            {value:108, name:'中评'},
+            {value:16, name:'差评'}
+        ],
+        [
+            {value:168,name:'好评'},
+            {value:78, name:'中评'},
+            {value:11, name:'差评'}
+        ]
+    ];
+
+    function pie() {
+        option1 = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            toolbox: {
+                show: true,
+                orient:'vertical',
+                bottom:0,
+                right:15,
+                z:1000,
+                itemGap: 20,
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data:['好评','差评','中评'],
+                textStyle: {
+                    fontSize:16,
+                    lineHeight:30
+                },
+                itemWidth:30,
+                itemHeight:20,
+                top:'20%',
+                left:'right',
+                right:'10%'
+
+            },
+            title:{
+                text:'活动评价',
+                textStyle: {
+                    fontSize: '18',
+                    fontWeight: 'bold',
+                    color:'#000'
+                },
+                left:'left'
+            },
+            series: [
+                {
+                    name:'活动评价',
+                    type:'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    center:['50%','60%'],
+                    hoverAnimation:true,
+                    hoverOffset:10,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:evaluate[parseInt(document.getElementById('select2').value)-1]
+                }
+            ]
+
+        };
+        myChart2.setOption(option1);
+
+    }
+
+    pie();
+
+    document.getElementById('btn').onclick=function () {
+        pie();
+    }
+
+    //结束。
+</script>

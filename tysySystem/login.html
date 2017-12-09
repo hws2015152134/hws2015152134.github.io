@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>太原师范学院计算机系</title>
+		<link rel="stylesheet" href="css/login.css">
+		<script src="js/js.js"></script>
+		<script src="js/jquery-1.12.4.min.js"></script>
+		<script src="js/move.js"></script>
+		<script>
+			window.onload = function() {
+				var user = document.getElementById("user");
+				var userimg = document.getElementById("userimg");
+				var hd_info = getClassNames("hd_info","div");
+				var sxiala = document.getElementById("Sxiala");
+				var cxiala = document.getElementById("Cxiala");
+				var setx = document.getElementById("set_xiala");
+				var cusx = document.getElementById("cus_xiala");
+				var bar = document.getElementById("xbar");
+			
+				var ni = document.getElementById("xni");
+				var more_d = document.getElementById("more_d");
+				var more_a = getClassNames("more_a","a")[0];
+				var barT = getClassNames("header_left_ul","ul")[0];
+				var niT = getClassNames("footer","div")[0];
+				var bgT = document.getElementsByTagName("body")[0];
+				var ftr = document.getElementById("footer_top_rdiv");
+				var css = document.getElementById("css");
+				var more_d_box = document.getElementById("more_d_box");
+				sxiala.isshw = false;
+				user.isshow = false;
+				cxiala.isshow = false;
+				bar.isshow = true;
+				
+				ni.isshow = true;
+				more_d.isshow = false;
+				var user_timer;
+				user_timer=setInterval(function(){
+					time();
+				},1000);
+				function time(){
+					var time = new Date();
+					user.innerHTML= time.toLocaleString();
+				}
+				time();
+				more_a.onclick = function(ev) {
+					if(more_d.isshow) {
+						startMove(more_d_box, {
+							height: 0
+						});
+						more_d.isshow = false;
+					}
+					else {
+						startMove(more_d_box, {
+							height: 700
+						});
+						more_d.isshow = true;
+					}
+					var oEvent = ev||event;
+					oEvent.cancelBubble=true;
+				}
+				for(var i = 0; i < hd_info.length; i++) {
+					hd_info[i].onmouseover = function() {
+						this.style.background = "#f5f5f5";
+					}
+					hd_info[i].onmouseout = function() {
+						this.style.background = "#fff";
+					}
+					hd_info[i].onclick = function(ev) {
+						oEvent = ev || event;
+						oEvent.cancelBubble = true;
+					}
+				}
+				bar.onclick = function(ev) {
+					if(this.isshow) {
+						barT.style.display = "none";
+						this.isshow = false;
+						this.style.backgroundPositionY = "0px";
+					} else {
+						barT.style.display = "block";
+						this.isshow = true;
+						this.style.backgroundPositionY = "-17px";
+					}
+					oEvent = ev || event;
+					oEvent.cancelBubble = true;
+				}
+				
+				ni.onclick = function(ev) {
+					if(this.isshow) {
+						niT.style.display = "none";
+						this.isshow = false;
+						this.style.backgroundPositionY = "0px";
+					} else {
+						niT.style.display = "block";
+						this.isshow = true;
+						this.style.backgroundPositionY = "-17px";
+					}
+					oEvent = ev || event;
+					oEvent.cancelBubble = true;
+				}
+				sxiala.parentNode.parentNode.onclick = function(ev) {
+					if(sxiala.isshow) {
+						startMove(setx, {
+							height: 0
+						});
+						sxiala.isshow = false;
+						sxiala.style.backgroundPositionY = "0px";
+					} else {
+						startMove(setx, {
+							height: 198
+						});
+						sxiala.isshow = true;
+						sxiala.style.backgroundPositionY = "-11px";
+					}
+					oEvent = ev || event;
+					oEvent.cancelBubble = true;
+				}
+				cxiala.parentNode.parentNode.onclick = function(ev) {
+					if(cxiala.isshow) {
+						startMove(cusx, {
+							height: 0
+						});
+						cxiala.isshow = false;
+						cxiala.style.backgroundPositionY = "0px";
+					} else {
+						startMove(cusx, {
+							height: 80
+						});
+						cxiala.isshow = true;
+						cxiala.style.backgroundPositionY = "-11px";
+					}
+					oEvent = ev || event;
+					oEvent.cancelBubble = true;
+				}
+				
+				document.onclick = function(ev) {
+					var oEvent = ev||event;
+						startMove(more_d_box, {
+							height: 0
+						});
+					oEvent.cancelBubble=true;
+				}
+			}
+		</script>
+	</head>
+	<body id="body">
+		<div class="header">
+			<ul class="header_left_ul">
+				<li class="header_left_ul_li">
+					<a class="header_left_ul_li_a" href="javascript:void(0)">学院官网</a>
+				</li>
+				<li class="header_left_ul_li">
+					<a class="header_left_ul_li_a" href="javascript:void(0)">计算机系简介</a>
+				</li>
+				<li class="header_left_ul_li" id="fenge">|</li>
+				<li class="header_left_ul_li" id="office_online">
+					<a class="header_left_ul_li_a" href="javascript:void(0)">教务管理系统</a>
+				</li>
+				<li class="header_left_ul_li">
+					<a class="header_left_ul_li_a" href="javascript:void(0)">关于我们</a>
+				</li>
+			</ul>
+			<script>
+				var header_left_ul = getClassNames("header_left_ul","ul")[0];
+				var header_left_ul_li_a = getClassNames("header_left_ul_li_a","a");
+				for(var i = 0; i < header_left_ul_li_a.length; i++) {
+					header_left_ul_li_a[i].number = i;
+					header_left_ul_li_a[i].onmouseover = function() {
+						bian(this, 100, 10, "opacity");						
+					}
+					header_left_ul_li_a[i].onmouseout = function() {
+						bian(this, 80, 10, "opacity");
+					}
+				}
+			</script>
+			<div class="header_right">
+				<a class="header_right_a" href="javascript:void(0)">
+					<span id="user"></span>
+			</a>
+			<a class="more_a" href="javascript:void(0)"></a>
+			<div id="more_d_box">
+				<div id="more_d">
+				<div class="hd_info" id="setting">
+					<div class="hb_tit">
+						<span class="hbic_col" id="c1"></span>
+						<span class="hb_tit_col">设置</span>
+						<span id="Sxiala"></span>
+					</div>
+				</div>
+				<div id="set_xiala">
+					<div class="hd_info" id="bar">
+						<div class="hb_s">
+							<div class="hb_tit_col">语言</div>
+							<div class="hb_t">English</div>
+						</div>
+					</div>
+					<div class="hd_info" id="int">
+						<div class="hb_s">
+							<div class="hb_tit_col">国家/地区</div>
+							<div class="hb_t">People's republic of China</div>
+						</div>
+					</div>
+					<div class="hd_info" id="int">
+						<div class="hb_s">
+							<div class="hb_tit_col">更多</div>
+						</div>
+					</div>
+				</div>
+				<div class="hd_info" id="SHistory">
+					<div class="hb_tit">
+						<span class="hbic_col" id="c2"></span>
+						<span class="hb_tit_col">查看历史</span>
+					</div>
+				</div>
+				<div class="hd_info" id="saves">
+					<div class="hb_tit">
+						<span class="hbic_col" id="c3"></span>
+						<span class="hb_tit_col">我的收藏</span>
+					</div>
+				</div>
+				<div class="hd_info" id="facebook">
+					<div class="hb_tit">
+						<span class="hbic_col" id="c4"></span>
+						<span class="hb_tit_col">网上论坛</span>
+					</div>
+				</div>
+				<div class="hd_info" id="safe">
+					<div class="hb_tit">
+						<span class="hbic_col" id="c5"></span>
+						<span class="hb_tit_col">个人信息</span>
+					</div>
+				</div>
+				<div class="hd_info" id="Cus">
+					<div class="hb_tit">
+						<span class="hbic_col" id="c6"></span>
+						<span class="hb_tit_col">自定义主页</span>
+						<span id="Cxiala"></span>
+					</div>
+				</div>
+				<div id="cus_xiala">
+					<div class="hd_info" id="bar">
+						<div class="hb_tit">
+							<span class="hb_tit_col">显示导航栏</span>
+							<span class="anniu" id="xbar"></span>
+						</div>
+					</div>
+					<div class="hd_info" id="int">
+						<div class="hb_tit">
+							<span class="hb_tit_col">显示推送新闻</span>
+							<span class="anniu" id="xni"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+
+		</div>
+		<div id="black"></div>
+		<div class="s_box">
+			<div class="logo"><img src="images/logo.png" width="100%" alt="" /></div>
+			<div id="logoname"><img src="images/logoname.png" width="100%"/></div>
+		</div>
+		<div id="glxt"><img src="images/jsjxhjxt.png" width="100%"/></div>
+		<div id="xiaoxun_box">
+			<img src="images/xiaoxun.png" alt="" width="100%"/>
+		</div>
+		<form id="login" action="index.html" method="get"  onfocusin="bian(black,100,20,'opacity')" onfocusout="bian(black,0,20,'opacity')">
+			<div id="userbox" class="input_box">
+				<span id="userimg"><img src="images/userimg.png" width="100%" alt="" /></span>
+				<input id="userin" type="text" placeholder="学号"/>
+			</div>
+			<div id="pwdbox" class="input_box">
+				<span id="pwdimg"><img src="images/pwdimg.png" width="100%" alt="" /></span>
+				<input id="pwdin" type="password" placeholder="密码"/>
+			</div>
+			<div id="loginsub">
+				<input id="sub" type="submit" value=""/>
+			</div>
+		</form>
+		<script>
+			$(function () {
+                var re0=/^20\d{8}$/;
+				if(re0.test($('#userin').val())){
+				    $('#sub').submit(function () {
+
+                    })
+				}
+				else {
+                    $('#sub').submit(function () {
+                        return false;
+                    })
+				}
+            })
+		</script>
+		<div class="footer">
+			<div id="footer_top">
+				<div id="footer_top_ldiv"></div>
+				<div id="footer_top_rdiv">
+					<div class="rdiv_t" id="tleft"></div>
+					<div class="rdiv_t" id="tright"></div>
+					<div class="rdiv_t" id="tphoto"></div>
+					<div class="rdiv_t" id="tinfo">info</div>
+				</div>
+				<div id="rdiv_info">
+					<span id="rdiv_info_tit">Download today's image</span>
+					<span id="love"><img src="images/xin.png" alt="" /></span>
+					<div id="line"></div>
+					<div id="today">太原师范学院美图</div>
+					<div id="photo_author">@Wensheng Han</div>
+				</div>
+			</div>
+			<div id="footer_tit">
+				<ul id="f_tit_ul">
+					<li class="tit_text">
+						<a class="tit_text_a" href="javascript:void(0)"></a>
+					</li>
+					<li class="tit_text">
+						<a class="tit_text_a" href="javascript:void(0)"></a>
+					</li>
+					<li class="tit_text">
+						<a class="tit_text_a" href="javascript:void(0)"></a>
+					</li>
+					<li class="tit_text">
+						<a class="tit_text_a" href="javascript:void(0)"></a>
+					</li>
+					<li class="tit_text">
+						<a class="tit_text_a" href="javascript:void(0)"></a>
+					</li>
+					<li class="tit_text">
+						<a class="tit_text_a" href="javascript:void(0)"></a>
+					</li>
+					<li class="tit_text">
+						<a class="tit_text_a" href="javascript:void(0)"></a>
+					</li>
+				</ul>
+			</div>
+			<div id="footer_center">
+				<div id="goleft"><span id="gl"></span></div>
+				<div id="news_box">
+					<ul id="news">
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+						<li class="news_li">
+							<a class="news_a" href="javascript:void(0)">
+								<div class="news_tit">Sarors,dogs rescued</div>
+								<div class="news_image"></div>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div id="goright"><span id="gr"></span></div>
+			</div>
+			<script type="text/javascript">
+				var l_div = document.getElementById("footer_top_ldiv");
+				var r_div = document.getElementById("footer_top_rdiv");
+				var f_top = document.getElementById("footer_top");
+				var f_center = document.getElementById("footer_center");
+				var r_info = document.getElementById("rdiv_info");
+				var tleft = document.getElementById("tleft");
+				var tright = document.getElementById("tright");
+				var k = 0;
+				var ba = document.getElementById("black");
+				var nt = getClassNames("news_tit","div");
+				var ta = getClassNames("tit_text_a","a");
+				var f_tit = document.getElementById("footer_tit");
+				var news = document.getElementById("news");
+				var goleft = document.getElementById("goleft");
+				var goright = document.getElementById("goright");
+
+				
+				for(var i = 0; i < ta.length; i++) { //标题内容初始化
+					ta[i].innerHTML = nt[i].innerHTML;
+				}
+				r_info.onmouseover = r_div.onmouseover = function() { //小黑框
+					r_info.style.display = "block";
+				}
+				r_info.onmouseout = function() { //小黑框
+					r_info.style.display = 'none';
+				}
+				var newsimage = getClassNames("news_image","div");
+				for(var i = 0; i < newsimage.length; i++) { //初始化ul所有背景图
+					newsimage[i].style.background = "url(images/th" + i + ".jpg)";
+				}
+				tleft.onclick = function() { //换背景
+					if(k != 4) {
+						k++;
+						changebg(k);
+					}
+					return false;
+				}
+				tright.onclick = function() { //换背景
+					if(k != 0) {
+						k--;
+						changebg(k);
+					}
+					return false;
+				}
+
+				news.style.width = "4992px";
+				news.num = 0;
+				news.length = parseInt(news.style.width);
+				news.style.left = "0px";
+				goleft.onclick = function() {
+					if(news.num != 0) {
+						startMove(news, {
+							left: -(--news.num / 3) * news.length
+						});
+					}
+				}
+				goright.onclick = function() {
+					if(news.num != 2) {
+						startMove(news, {
+							left: -(++news.num / 3) * news.length
+						});
+					}
+				}
+
+				f_center.isshow = true;
+				f_tit.isshow = false;
+				l_div.onclick = function() { //footer左侧按钮控制显示
+					if(f_tit.isshow == false && f_center.isshow == false) {
+						f_tit.style.display = "none";
+						f_tit.style.top = "0px";
+						f_center.style.display='block';
+						startMove(f_top, {
+							top: 0
+						});
+						startMove(f_center, {
+							top: 0
+						});
+						f_center.isshow = true;
+						f_tit.isshow = false;
+						this.style.backgroundPosition = "-1px -59px";
+					} else if(f_tit.isshow == true && f_center.isshow == false) {
+						startMove(f_tit, {
+							top: 135
+						});
+						startMove(f_top, {
+							top: 135
+						});
+						f_tit.style.display = "none";
+						f_tit.isshow = false;
+						f_center.isshow = false;
+						this.style.backgroundPosition = "-42px -56px";
+					} else if(f_tit.isshow == false && f_center.isshow == true) {
+						f_tit.style.display = "block";
+						startMove(f_center, {
+							top: 170
+						});
+						f_center.style.display='none';
+						startMove(f_tit, {
+							top: 90
+						});
+						startMove(f_top, {
+							top: 100
+						});
+						f_tit.isshow = true;
+						f_center.isshow = false;
+					}
+				}
+			</script>
+		</div>
+		<div id="copy">
+		</div>
+	</body>
+
+</html>

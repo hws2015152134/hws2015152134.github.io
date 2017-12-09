@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>太原师范学院-计算机活动管理系统</title>
+    <link rel="stylesheet" href="css/index-1.css">
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function () {
+            $('#all').height($(window).height());
+            $(window).resize(function () {
+                $('#all').height($(window).height());
+                $('#workspace').height($('#all').height()-$('#banner').height()+'px');
+                $('#workspace>div').height($('#workspace').height()-100+'px');
+            });
+        })
+    </script>
+</head>
+<body>
+<div id="all">
+    <div class="all-left">
+        <div class="portrait">
+            <div style="overflow: hidden;margin-bottom: 10px;">
+                <img src="images/portrait.png" alt="">
+                <span class="user">您好，用户<span class="sno">201515xxx</span></span>
+            </div>
+            <p>上次登录时间：<span>2017-11-29  10:30</span></p>
+        </div>
+        <div class="nav">
+            <ul class="fir-nav">
+                <li class="tzgg" data-id="notice">通知公告</li>
+                <li data-id="prein">个人信息</li>
+                <li id="glhd"><span class="glhd-span-top"></span>活动管理</li>
+                <ul class="hdgl">
+                    <li data-id="fentuanwei">分团委</li>
+                    <li data-id="xueshenghui">学生会</li>
+                    <li data-id="other">其他</li>
+                </ul>
+                <li data-id="statistics">统计</li>
+                <li data-id="safe">账号安全</li>
+            </ul>
+        </div>
+    </div>
+    <div class="all-right">
+        <div id="banner">
+            <span class="welcome">欢迎登录计算机系活动管理系统！</span>
+            <span class="exit">退出</span>
+            <span class="about">关于</span>
+            <span class="help">帮助</span>
+        </div>
+        <div id="workspace">
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <span>教辅人员：<span>【2015xxx】xxx</span></span>
+</div>
+<script>
+    $(function () {
+        $('#workspace').height($('#all').height()-$('#banner').height()+'px');
+
+        //切换workspace开始：
+        $('.fir-nav li').not('#glhd').on("click",  function(){
+            var sId = $(this).data("id"); //获取data-id的值
+            window.location.hash = sId; //设置锚点
+            loadInner(sId);
+        });
+        function loadInner(sId){
+            var sId = window.location.hash;
+            var pathn, i;
+            switch(sId){
+                case "#notice": pathn = "notice.html"; i = 0; break;
+                case "#prein": pathn = "prein.html"; i = 1; break;
+                case "#fentuanwei": pathn = "fentuanwei.html"; i = 2; break;
+                case "#xueshenghui": pathn = "xueshenghui.html"; i = 3; break;
+                case "#other": pathn = "other.html"; i = 4; break;
+                case "#statistics": pathn = "statistics.html"; i = 5; break;
+                case "#safe": pathn = "safe.html"; i = 6; break;
+                default: pathn = "notice.html"; i = 0; break;
+            }
+            $("#workspace").load(pathn,function () {
+                $('#workspace>div').height($('#workspace').height()-100+'px');
+            }); //加载相对应的内容
+        }
+        var sId = window.location.hash;
+        loadInner(sId);
+        //结束。
+
+        //左侧列表开始：
+        var offon=true;
+        var oarr=$('<div class="arr"></div>');
+        $('.fir-nav li').not('#glhd').mousedown(function () {
+            $('.fir-nav li').each(function () {
+                $(this).css('background','');
+            });
+            $('#glhd div').removeClass(function () {
+                offon=true;
+                return 'arr';
+            });
+            $(this).css('background','#6a709e').append(oarr);
+        }).triggerHandler('mousedown');
+        $('#glhd').click(function () {
+           $('.nav .hdgl').slideToggle(200,function () {
+               if($('.nav .hdgl').has('.arr').get(0)){
+                   if(offon){
+                       $('#glhd').css('background','#6a709e');
+                       $('#glhd').append($('<div class="arr"></div>'));
+                       offon=false;
+                   }
+                   else {
+                       $('#glhd .arr').remove();
+                       $('#glhd').css('background','');
+                       offon=true;
+                   }
+               }
+           });
+           $('.glhd-span-top').toggleClass('glhd-span-bott')
+        });
+        //结束。
+    })
+</script>
+</body>
+</html>

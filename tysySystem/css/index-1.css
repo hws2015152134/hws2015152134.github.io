@@ -1,0 +1,26 @@
+a, body {font-family: "Segoe UI", Segoe, Tahoma, Arial, Verdana, sans-serif;font-size: small;text-decoration: none;}
+li{list-style: none}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, hgroup, nav, section {  margin: 0;padding: 0;}
+body{background: url("../images/bg.jpg") no-repeat;background-size: cover;font-size: 12px;}
+#all{opacity: .8;width: 1024px;margin: 0px auto;background: #fff;box-shadow: 0px 0px 7px 0px #000;min-height: 620px;overflow: hidden;position: relative;z-index: 10}
+.all-left,.all-right{float: left;height: 100%}
+
+.all-left{background: #33385b;width: 241px;}
+.portrait{height: 155px;width: 100%;background: #222852;box-sizing: border-box;padding: 20px 30px;color: #d9d6d6;font-size: 12px;}
+.portrait img{vertical-align: middle;display: inline-block;float: left;width: 80px;height: 80px;}
+.portrait .user{display: block;float: left;width: 100px;height: 80px;padding: 25px 0 0 10px;box-sizing: border-box;font-size: 12px;}
+.portrait p{color: #9b9999}
+.all-left .nav li{position:relative;width: 100%;height: 54px;line-height: 54px;text-align: center;cursor: pointer;font-size: 16px;color: #d9d6d6;border-bottom: 1px solid #4f545b}
+.all-left .hdgl li{height: 45px;line-height: 45px;width: 100%;background: #222852}
+.glhd-span-top{width: 13px;height: 8px;background: url("../images/part1-icon.png");background-position: 0px -46px;display: inline-block;vertical-align: middle;position: absolute;top: 50%;margin-top: -4px;left: 63px;}
+.glhd-span-bott{background-position: 0px -23px;width: 9px;height: 12px;margin-top: -6px;}
+.arr{width: 7px;height: 12px;background:url("../images/part1-icon.png");position: absolute;top: 50%;right: 0px;margin-top: -6px;}
+
+.all-right{width: 783px;background: #fff}
+#banner{height: 32px;width: 100%;line-height: 32px;background: #f3f3f5;box-sizing: border-box;padding:0px 26px;color: #3e4651;box-shadow: 0px 0px 7px 0px #000;}
+#banner .help,#banner .exit,#banner .about{float: right;margin-left: 26px;cursor: pointer}
+#banner .help:hover,#banner .exit:hover,#banner .about:hover{text-decoration: underline}
+#workspace{padding: 40px 54px;}
+#workspace>div{overflow: auto;padding: 0 42px 50px 0px;box-sizing: border-box}
+
+#footer{position: fixed;bottom: 0px;width: 100%;height: 32px;line-height: 32px;background: #3f3e3e;font-size: 12px;color: #5b7676;padding: 0 2.5%;box-sizing: border-box;z-index: 100}
